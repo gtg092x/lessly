@@ -8,7 +8,6 @@ tree.Call = require('./call');
 tree.Dimension = require('./dimension');
 tree.Unit = require('./unit');
 tree.Keyword = require('./keyword');
-tree.Value = require('./value');
 tree.Negative = require('./negative');
 
 module.exports = tree;

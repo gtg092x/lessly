@@ -5,6 +5,5 @@ export number from './number';
 export types from './types';
 
 import color from './color';
-import colorBlending from './color';
-
+import colorBlending from './color-blending';
 export const callable = {...color, ...colorBlending};

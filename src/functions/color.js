@@ -1,6 +1,5 @@
 var Dimension = require("../tree/dimension"),
     Color = require("../tree/color"),
-    Quoted = require("../tree/quoted"),
     Anonymous = require("../tree/anonymous"),
     colorFunctions;
 
@@ -240,10 +239,6 @@ export default colorFunctions = {
     // http://sass-lang.com
     //
     mix: function (color1, color2, weight) {
-        if (!color1.toHSL || !color2.toHSL) {
-            console.log(color2.type);
-            console.dir(color2);
-        }
         if (!weight) {
             weight = new Dimension(50);
         }
@@ -306,10 +301,6 @@ export default colorFunctions = {
         return new Anonymous(color.toARGB());
     },
     color: function(c) {
-        if ((c instanceof Quoted) &&
-            (/^#([a-f0-9]{6}|[a-f0-9]{3})$/i.test(c.value))) {
-            return new Color(c.value.slice(1));
-        }
         if ((c instanceof Color) || (c = Color.fromKeyword(c.value))) {
             c.value = undefined;
             return c;

@@ -5,13 +5,11 @@ import {callable} from '../functions';
 var Call = function (name, args) {
     this.name = name;
     this.args = args;
-
     if (callable[name]) {
         return callable[name].apply(this, args);
     }
 
-    return null;
+    throw `[lessly] cannot find function ${name}`;
 };
-
 
 module.exports = Call;

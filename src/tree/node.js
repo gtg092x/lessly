@@ -76,7 +76,7 @@ Node.compare = function (a, b) {
     if ((a.compare) &&
         // for "symmetric results" force toCSS-based comparison
         // of Quoted or Anonymous if either value is one of those
-        !(b.type === "Quoted" || b.type === "Anonymous")) {
+        !(b.type === "Anonymous")) {
         return a.compare(b);
     } else if (b.compare) {
         return -b.compare(a);

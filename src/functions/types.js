@@ -1,10 +1,7 @@
 var Keyword = require("../tree/keyword"),
-    DetachedRuleset = require("../tree/detached-ruleset"),
     Dimension = require("../tree/dimension"),
     Color = require("../tree/color"),
-    Quoted = require("../tree/quoted"),
     Anonymous = require("../tree/anonymous"),
-    URL = require("../tree/url"),
     Operation = require("../tree/operation");
 
 var isa = function (n, Type) {
@@ -29,23 +26,14 @@ var isa = function (n, Type) {
         return items;
     };
 export default ({
-    isruleset: function (n) {
-        return isa(n, DetachedRuleset);
-    },
     iscolor: function (n) {
         return isa(n, Color);
     },
     isnumber: function (n) {
         return isa(n, Dimension);
     },
-    isstring: function (n) {
-        return isa(n, Quoted);
-    },
     iskeyword: function (n) {
         return isa(n, Keyword);
-    },
-    isurl: function (n) {
-        return isa(n, URL);
     },
     ispixel: function (n) {
         return isunit(n, 'px');
