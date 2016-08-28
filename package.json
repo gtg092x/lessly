@@ -32,7 +32,9 @@
   "keywords": [
     "less",
     "lessly",
-    "style"
+    "style",
+    "css",
+    "colors"
   ],
   "author": "Matthew Drake <mdrake@mediadrake.com> (https://github.com/gtg092x)",
   "license": "MIT"
