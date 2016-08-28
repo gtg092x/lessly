@@ -29,7 +29,7 @@ lessly('fade(red, .9)');
 // outputs rgba(255, 0, 0, 0.9)
 ```
 
-These operations happen recursively, so feel free to use anything you would use with [Less][].
+These operations happen recursively, so feel free to use [any less color function](http://lesscss.org/functions/#color-definition).
 
 ```js
 import lessly from 'lessly';
