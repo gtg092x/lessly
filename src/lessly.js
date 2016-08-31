@@ -81,9 +81,12 @@ for(let key in colorFunctions) {
 }
 
 import Dimension from './tree/dimension';
-export function dimension(val, unit) {
+export function dimension(val, unit, ...args) {
   if (unit === undefined) {
     return op(val);
+  }
+  if (args.length) {
+    return op(toOps(val, unit, ...args));
   }
   if (containsOp(val) || containsOp(unit)) {
     return op(toOps(val, unit));

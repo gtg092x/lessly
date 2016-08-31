@@ -75,6 +75,8 @@ export default function () {
       assert.strictEqual(dimension('10% + 10'), '20%');
       assert.strictEqual(dimension('10% +', 10), '20%');
       assert.strictEqual(dimension('10%', ' + 10'), '20%');
+      assert.strictEqual(dimension('10%', ' + 10', ' + 10'), '30%');
+      assert.strictEqual(dimension('10%', ' + ', ' 10'), '20%');
       assert.strictEqual(dimension('10', ' + 10%'), '20%');
       assert.strictEqual(dimension(10, ' + 10%'), '20%');
       assert.strictEqual(dimension(10, ' * 10%'), '100%');
