@@ -81,6 +81,26 @@ export default function () {
       assert.strictEqual(dimension(10, ' + 10%'), '20%');
       assert.strictEqual(dimension(10, ' * 10%'), '100%');
 
+      assert.deepEqual(dimension({
+        'rule1': 10,
+        'rule2': 20
+      }, ' * 10%'), {
+        rule1: '100%',
+        rule2: '200%',
+      });
+
+      assert.deepEqual(px({
+        'rule1': 10,
+        'rule2': {
+          subrule: 20
+        }
+      }), {
+        rule1: '10px',
+        rule2: {
+          subrule: '20px'
+        }
+      });
+
 
       const units = {
         px, '%': percent, 'in': inch, mm, vh, vw, rad, pt, cm, vmin, pc, ex
@@ -91,6 +111,11 @@ export default function () {
         assert.strictEqual(fn(10), `10${expected}`);
 
       });
+    });
+
+    it('supports dimension theme', function() {
+      let lesslyTheme = theme({mySize: 10});
+      assert.equal(lesslyTheme.px('@my-size'), '10px');
     });
 
   });

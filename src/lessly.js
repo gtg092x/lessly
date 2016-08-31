@@ -42,10 +42,13 @@ export {lessly};
 // export functions
 
 // parse function args so we dont need to expose Color Node
-function bindParse(func, vars) {
+function bindParse(func, vars, convert = true) {
   return (...args) => {
     const finalArgs = args.map(arg => parseVars(String(arg), vars));
-    const result = func(...finalArgs.map(parse)).toCSS();
+    let result = func(...finalArgs.map((...argSet) => convert ? parse(...argSet) : argSet[0]));
+    if (convert) {
+      result = result.toCSS();
+    }
     return isNaN(result) ? result : Number(result);
   };
 }
@@ -55,15 +58,23 @@ import {callable} from './functions';
 export {callable};
 
 export function theme(vars = {}) {
-  const defaulFunction = (str, subVars = {}) => {
+  let defaulFunction = (str, subVars = {}) => {
     return lessly(str, {...vars, ...subVars});
   };
 
-  return Object.keys(callable).reduce((pointer, key) => {
+  defaulFunction = Object.keys(callable).reduce((pointer, key) => {
     const func = callable[key];
     pointer[key] = bindParse(func, vars);
     return pointer;
   }, defaulFunction);
+
+  defaulFunction = Object.keys(dimensions).reduce((pointer, key) => {
+    const func = dimensions[key];
+    pointer[key] = bindParse(func, vars, false);
+    return pointer;
+  }, defaulFunction);
+
+  return defaulFunction;
 }
 
 const colorFunctions = Object.keys(callable).reduce((pointer, key) => {
@@ -80,8 +91,21 @@ for(let key in colorFunctions) {
   module.exports[key] = colorFunctions[key];
 }
 
+function isPlainObj(o) {
+  return typeof o == 'object' && o.constructor == Object;
+}
+
 import Dimension from './tree/dimension';
 export function dimension(val, unit, ...args) {
+  if (isPlainObj(val)) {
+    return Object.keys(val).reduce(function(pointer, key){
+      const subVal = val[key];
+      return {
+        ...pointer,
+        [key]: dimension(subVal, unit, ...args)
+      };
+    }, {});
+  }
   if (unit === undefined) {
     return op(val);
   }
@@ -151,3 +175,7 @@ export const vmin = val => dimension(val, 'vmin');
 export const cm = val => dimension(val, 'cm');
 export const pc = val => dimension(val, 'pc');
 export const ex = val => dimension(val, 'ex');
+
+export const dimensions = {
+  px, percent, inch, mm, vh, vw, rad, pt, cm, vmin, pc, ex, dimension, dim
+};

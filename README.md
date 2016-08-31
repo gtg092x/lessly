@@ -103,6 +103,24 @@ dimension(10 , ' + 10px');
 
 ```
 
+We'll also recurse any object and apply operations to child values
+ 
+```js
+import {dimension} from 'lessly'; // or dim for short
+
+
+dimension({
+    myRule: 10
+}, 'px');
+// outputs {myRule: '10px'}
+
+dimension({
+    myRule: 10
+}, '+ 10px');
+// outputs {myRule: '20px'}
+
+```
+
 There's also handy shortcuts for [every css unit](http://www.tutorialspoint.com/css/css_measurement_units.htm).
 
 ```js
