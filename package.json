@@ -1,6 +1,6 @@
 {
   "name": "lessly",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Less functions without less",
   "main": "lib/lessly.js",
   "directories": {
