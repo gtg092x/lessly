@@ -75,6 +75,68 @@ lesslyTheme.fade('@my-color', .9);
 
 ```
 
+## Dimensions
+
+Dimensions made easy - basic operations are free too!
+
+```js
+import {dimension} from 'lessly'; // or dim for short
+
+
+dimension(10, 'px');
+// outputs 10px
+
+dimension('10px', 'px');
+// outputs 10px
+
+dimension('10px + 10');
+// outputs 20px
+
+dimension('10px -' , 5);
+// outputs 5px
+
+dimension('10px' , ' * 10');
+// outputs 100px
+
+dimension(10 , ' + 10px');
+// outputs 20px
+
+```
+
+There's also handy shortcuts for [every css unit](http://www.tutorialspoint.com/css/css_measurement_units.htm).
+
+```js
+import {px, percent, inch, mm, vh, vw, rad, pt, cm} from 'lessly';
+
+px(10);
+// outputs 10px
+
+percent(10);
+// outputs 10%
+
+inch(10);
+// outputs 10in
+
+mm(10);
+// outputs 10mm
+
+vh(10);
+// outputs 10vh
+
+vw(10);
+// outputs 10vw
+
+rad(10);
+// outputs 10rad
+
+pt(10);
+// outputs 10pt
+
+cm(10);
+// outputs 10cm
+
+```
+
 ## Further Documentation
 
 Check out the [less color definition functions](http://lesscss.org/functions/#color-definition). Every color definition function is supoorted.

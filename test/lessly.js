@@ -1,5 +1,6 @@
 import chai from 'chai';
-import lessly, {colorFunctions, fade, theme} from '../src/lessly';
+import lessly, {colorFunctions, fade, theme, dimension} from '../src/lessly';
+import {px, percent, inch, mm, vh, vw, rad, pt, cm, vmin, pc, ex} from '../src/lessly';
 import functionArgs from './functions';
 const {assert} = chai;
 
@@ -64,6 +65,30 @@ export default function () {
           }
         });
       }
+    });
+
+    it('supports dimensions', function() {
+      assert.equal(dimension(10, 'px'), '10px');
+      assert.equal(dimension('10px', 'px'), '10px');
+      assert.strictEqual(dimension('10px'), '10');
+      assert.strictEqual(dimension('10% + 10%'), '20%');
+      assert.strictEqual(dimension('10% + 10'), '20%');
+      assert.strictEqual(dimension('10% +', 10), '20%');
+      assert.strictEqual(dimension('10%', ' + 10'), '20%');
+      assert.strictEqual(dimension('10', ' + 10%'), '20%');
+      assert.strictEqual(dimension(10, ' + 10%'), '20%');
+      assert.strictEqual(dimension(10, ' * 10%'), '100%');
+
+
+      const units = {
+        px, '%': percent, 'in': inch, mm, vh, vw, rad, pt, cm, vmin, pc, ex
+      }
+
+      Object.keys(units).forEach(expected => {
+        const fn = units[expected];
+        assert.strictEqual(fn(10), `10${expected}`);
+
+      });
     });
 
   });

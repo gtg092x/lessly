@@ -18,7 +18,7 @@ Dimension.prototype.type = "Dimension";
 Dimension.prototype.accept = function (visitor) {
     this.unit = visitor.visit(this.unit);
 };
-Dimension.prototype.eval = function (context) {
+Dimension.prototype.eval = function () {
     return this;
 };
 Dimension.prototype.toColor = function () {
