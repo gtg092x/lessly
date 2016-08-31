@@ -38,6 +38,15 @@ lessly('red(fade(red, .9))');
 // outputs 255
 ```
 
+Lessly will also crawl objects and parse each value
+
+```js
+lessly({
+    myRule: 'fade(red, 90%)'
+});
+// outputs {myRule: 'rgba(255, 0, 0, 0.9)'}
+```
+
 ## Variables
 
 For entity parsing, you can pass in variables to be swapped out with a params object
@@ -101,6 +110,13 @@ dimension('10px' , ' * 10');
 dimension(10 , ' + 10px');
 // outputs 20px
 
+```
+
+Lessly will also parse what looks like dimensions
+
+```js
+lessly('10px + 10');
+// outputs 20px
 ```
 
 We'll also recurse any object and apply operations to child values

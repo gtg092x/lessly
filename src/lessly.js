@@ -1,12 +1,6 @@
 import parse from './parser/parser'
+import { camelCaseToDash } from './utils';
 export {parse};
-
-/*
-  Converts camelCase to camel-case
- */
-function camelCaseToDash(key) {
-  return key.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
-}
 
 /*
  Parses @var with {var: 'value'}
@@ -28,13 +22,36 @@ function parseVars(str, vars = {}) {
   }, str);
 }
 
+function containsCall(str) {
+  return str.trim().search(/\)$/) > -1;
+}
+
+function isDimension(str) {
+  return typeof str === "number" || containsOp(str) || (!containsCall(str) && containsUnit(str));
+}
+
 /*
   Parses less entity string
  */
 function lessly(str, vars = {}) {
   const finalstr = parseVars(str, vars);
+
+  if (isPlainObj(str)) {
+    return Object.keys(str).reduce(function(pointer, key){
+      const subVal = str[key];
+      return {
+        ...pointer,
+        [key]: lessly(subVal, vars)
+      };
+    }, {});
+  }
+
+  if (isDimension(parseVars(str, vars))) {
+    return dimension(parseVars(str, vars));
+  }
+
   return parse(finalstr).toCSS();
-};
+}
 
 export default lessly;
 export {lessly};
@@ -126,6 +143,17 @@ export function value(val) {
 
 function containsOp(val) {
   return val.search && val.search(/[\+\*\-\/]/) > -1;
+}
+
+function containsUnit(val) {
+  const units = Object.keys(dimensions);
+  for(let i = 0; i < units.length; i++) {
+    const reg = new RegExp(units[i] + '/b');
+    if(val.search && val.trim().search(reg) > -1) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function toOps(...args) {

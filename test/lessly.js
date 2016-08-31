@@ -18,6 +18,9 @@ export default function () {
     it('parse color', function() {
       let color = lessly('fade(rgb(0, 0, 0), 90%)');
       assert.equal(color, 'rgba(0, 0, 0, 0.9)');
+      assert.deepEqual(lessly({
+        myColor: 'fade(rgb(0, 0, 0), 90%)'
+      }), {myColor: 'rgba(0, 0, 0, 0.9)'});
 
       color = lessly('fade(black, 90%)');
       assert.equal(color, 'rgba(0, 0, 0, 0.9)');
@@ -71,7 +74,7 @@ export default function () {
       assert.equal(dimension(10, 'px'), '10px');
       assert.equal(dimension('10px', 'px'), '10px');
       assert.strictEqual(dimension('10px'), '10');
-      assert.strictEqual(dimension('10% + 10%'), '20%');
+      assert.strictEqual(lessly('10% + 10%'), '20%');
       assert.strictEqual(dimension('10% + 10'), '20%');
       assert.strictEqual(dimension('10% +', 10), '20%');
       assert.strictEqual(dimension('10%', ' + 10'), '20%');

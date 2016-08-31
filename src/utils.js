@@ -8,5 +8,8 @@ module.exports = {
             copy[i] = arr[i];
         }
         return copy;
+    },
+    camelCaseToDash(key) {
+        return key.replace( /([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
     }
 };
